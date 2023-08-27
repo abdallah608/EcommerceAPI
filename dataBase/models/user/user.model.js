@@ -69,7 +69,7 @@ userSchema.pre('save', function(){
 
 userSchema.pre('findOneAndUpdate', function(){
   if(this._update.password){  
-    this._update.password= bcrypt.hashSync(this._update.password,7)}
+    this._update.password= bcrypt.hashSync(this._update.password,Number(process.env.Rounded))}
 })
 
 export const userModel = mongoose.model("user",userSchema);

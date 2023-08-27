@@ -18,7 +18,7 @@ const  brandSchema = new mongoose.Schema({
     timestamps:true
 })
 brandSchema.post('init',(doc)=>{
-    if(doc.logo){doc.logo= "http://localhost:3000/brand/"+doc.logo}
+    if(doc.logo){doc.logo= `${process.env.updateURL}/brand/`+doc.logo}
   
 })
 

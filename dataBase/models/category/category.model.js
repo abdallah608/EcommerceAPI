@@ -18,7 +18,7 @@ const  categorySchema = new mongoose.Schema({
     timestamps:true
 })
 categorySchema.post('init',(doc)=>{
-    if(doc.image ){ doc.image= "http://localhost:3000/category/"+doc.image}
+    if(doc.image ){ doc.image= `${process.env.updateURL}/category/`+doc.image}
 
 })
 

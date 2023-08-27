@@ -75,8 +75,8 @@ const  productSchema = new mongoose.Schema({
 productSchema.post('init',(doc)=>{
 if(doc.images ||doc.imgCover){
     
-    doc.imgCover= "http://localhost:3000/product/"+doc.imgCover
-    doc.images= doc.images.map(path=>"http://localhost:3000/product/"+path)
+    doc.imgCover= `${process.env.updateURL}/product/`+doc.imgCover
+    doc.images= doc.images.map(path=>`${process.env.updateURL}/product/`+path)
 }
 })
 

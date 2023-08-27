@@ -19,7 +19,7 @@ export const signIn = catchAsyncError(
     if(!founded) return next(new appError('email not found please register first',409));
     let matched=  bcrypt.compareSync(password,founded.password)
     if(!matched) return next(new appError('password notMatched',409));
-    let token= jwt.sign({name:founded.name,userId:founded._id,role:founded.role},"abdallah")
+    let token= jwt.sign({name:founded.name,userId:founded._id,role:founded.role},process.env.key)
     res.status(201).json({message:"welcome",token})
 })
 
@@ -31,7 +31,7 @@ export const protectRoutes= catchAsyncError(
        let {token} = req.headers
     if(!token) return next(new appError('please provide a token',404))
 
-    let decoded = await jwt.verify(token, "abdallah");
+    let decoded = await jwt.verify(token, process.env.key);
     // console.log(decoded.userId);
     let user= await userModel.findById(decoded.userId)
     if (!user) return next(new appError('user not found',400))

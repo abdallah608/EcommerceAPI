@@ -12,7 +12,7 @@ import { init } from './src/server/server.js';
 
 const app = express()
 const port = process.env.port || 8000
-app.use(express.static("uploads"))
+app.use(express.static(process.env.static))
 app.use(express.urlencoded({extended:true}))
 app.use((req, res, next) =>{
     if(req.originalUrl == '/order/webhook'){
@@ -22,7 +22,7 @@ app.use((req, res, next) =>{
     }
 })
 app.use(express.json())
-app.use(morgan('dev'))
+app.use(morgan(process.env.MOOD))
 connection()
 
 
