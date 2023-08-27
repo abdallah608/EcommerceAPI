@@ -57,11 +57,11 @@ catchAsyncError(
 export const onlinePayment = catchAsyncError(
     async(req,res,next)=>{
         let cart = await cartModel.findById(req.params.id)
-        let totalOrderPrice = cart.totalPriceAfterDiscount? cart.totalPriceAfterDiscount:cart.totalPrice
-        
+        console.log(cart);
+        let totalOrderPrice = cart.totalPriceAfterDiscount?cart.totalPriceAfterDiscount:cart.totalPrice
         let session = await  stripe.checkout.sessions.create({
         line_items:[
-            {
+            {   
                 price_data:{
                     currency:"egp",
                     unit_amount:totalOrderPrice *100,
@@ -73,11 +73,13 @@ export const onlinePayment = catchAsyncError(
             }
         ],
         mode:"payment",
+        metadata: req.body.ShippingAddress,
+        
         success_url:"https://route-comm.netlify.app/#/",
         cancel_url:"https://route-comm.netlify.app/#/cart",
         customer_email:req.user.email,
         client_reference_id:req.params.id,
-        metadata:req.body.ShippingAddress
+        
     })
-    res.status(200).json({message:"done",session})    
+    res.status(200).json({message:"done",url:session.url})    
 })

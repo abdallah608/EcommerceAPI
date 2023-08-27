@@ -18,9 +18,13 @@ app.use(express.json())
 app.use(morgan('dev'))
 connection()
 
+
 init(app)
 app.get('/', (req, res) => res.send('Hello World!'))
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+
+
+
 
 
     

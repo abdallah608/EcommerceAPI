@@ -23,8 +23,7 @@ const  subCategorySchema = new mongoose.Schema({
 })
 
 subCategorySchema.post('init',(doc)=>{
-    console.log(doc);
-    doc.image= "http://localhost:3000/subCategory/"+doc.image
+    if(doc.image){   doc.image= "http://localhost:3000/subCategory/"+doc.image}
 })
 
 export const subCategoryModel =  mongoose.model('subCategory', subCategorySchema)

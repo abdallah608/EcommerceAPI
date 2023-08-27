@@ -18,8 +18,8 @@ const  categorySchema = new mongoose.Schema({
     timestamps:true
 })
 categorySchema.post('init',(doc)=>{
+    if(doc.image ){ doc.image= "http://localhost:3000/category/"+doc.image}
 
-    doc.image= "http://localhost:3000/category/"+doc.image
 })
 
 export const categoryModel =  mongoose.model('category', categorySchema)

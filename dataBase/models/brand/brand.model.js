@@ -18,7 +18,8 @@ const  brandSchema = new mongoose.Schema({
     timestamps:true
 })
 brandSchema.post('init',(doc)=>{
-    doc.logo= "http://localhost:3000/brand/"+doc.logo
+    if(doc.logo){doc.logo= "http://localhost:3000/brand/"+doc.logo}
+  
 })
 
 export const brandModel =  mongoose.model('brand', brandSchema)
