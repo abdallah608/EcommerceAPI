@@ -1,4 +1,3 @@
-import { response } from "express";
 import { cartModel } from "../../../dataBase/models/cart/cart.model.js";
 import { orderModel } from "../../../dataBase/models/order/order.model.js";
 import { productModel } from "../../../dataBase/models/product/product.model.js";
@@ -83,3 +82,28 @@ export const onlinePayment = catchAsyncError(
     })
     res.status(200).json({message:"done",url:session.url})    
 })
+
+export const webhook = catchAsyncError(
+    async(req,res,next)=>{
+        const sig = req.headers['stripe-signature'];
+  
+        let event;
+      
+        try {
+          event = stripe.webhooks.constructEvent(req.body, sig, "whsec_6Ls1nSNNm9vmLkaP3qDlWo3CQYA3GtjA");
+        } catch (err) {
+          res.status(400).send(`Webhook Error: ${err.message}`);
+          return;
+        }
+      
+        // Handle the event
+        if (event.type != "checkout.session.completed") {
+        return  res.status(402).json({message:"Payment failed",event:event.type})
+       
+        }
+      
+        // Return a 200 res to acknowledge receipt of the event
+        return  res.status(200).json({message:"Payment DONE"})
+       
+    }
+)

@@ -12,3 +12,5 @@ orderRouter.route('/:id')
 orderRouter.route('/checkout/:id')
 .post(protectRoutes,orderController.onlinePayment)
 
+orderRouter.post('/webhook', express.raw({type: 'application/json'}), orderController.webhook);
+
